@@ -1,27 +1,63 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path: "/",
+    redirect: "/home/star",
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
-]
+    path: "/home",
+    component: () => import("@/views/Home"),
+    children: [
+      {
+        path: "/home/star",
+        component: () => import("@/views/Star"),
+      },
+      {
+        path: "/home/list",
+        component: () => import("@/views/List"),
+      },
+      {
+        path: "/home/news",
+        component: () => import("@/views/News"),
+      },
+      {
+        path: "/home/profile",
+        component: () => import("@/views/Profile"),
+      },
+    ],
+  },
+  {
+    path: "/login",
+    component: () => import("@/views/login"),
+  },
+  {
+    path: "/favorate",
+    component: () => import("@/views/favorate"),
+  },
+  {
+    path: "/rent",
+    component: () => import("@/views/rent"),
+  },
+  {
+    path: "/city",
+    component: () => import("@/views/city"),
+  },
+  {
+    path: "/addProfile",
+    component: () => import("@/views/addProfile"),
+  },
+  {
+    path: "/rentadd",
+    component: () => import("@/views/rentadd"),
+  },
+];
 
 const router = new VueRouter({
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

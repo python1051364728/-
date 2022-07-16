@@ -1,4 +1,38 @@
-const { defineConfig } = require('@vue/cli-service')
+const { defineConfig } = require("@vue/cli-service");
+const path = require("path");
 module.exports = defineConfig({
-  transpileDependencies: true
-})
+  transpileDependencies: true,
+  lintOnSave: false,
+  configureWebpack: {
+    devServer: {
+      open: true,
+      port: 8090,
+      host: "localhost",
+    },
+  },
+  chainWebpack: (config) => {
+    config.plugin("html").tap((args) => {
+      args[0].title = "好客租房";
+      return args;
+    });
+  },
+
+  // 定制主题
+  css: {
+    loaderOptions: {
+      less: {
+        // 若 less-loader 版本小于 6.0，请移除 lessOptions 这一级，直接配置选项。
+        lessOptions: {
+          modifyVars: {
+            // 直接覆盖变量
+            // 或者可以通过 less 文件覆盖（文件路径为绝对路径）
+            hack: `true; @import "${path.join(
+              __dirname,
+              "src/styles/index.less"
+            )}";`,
+          },
+        },
+      },
+    },
+  },
+});
